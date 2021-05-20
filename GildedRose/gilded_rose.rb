@@ -8,6 +8,9 @@ class GildedRose
   BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
   SULFURAS = "Sulfuras, Hand of Ragnaros"
 
+  MAX_QUALITY = 50
+  MIN_QUALITY = 0
+
 
   def update_quality()
     @items.each do |item|
@@ -30,11 +33,11 @@ class GildedRose
   end
 
   def increment_quality_depend_on_sell_in(item, quality = 1)
-    item.quality = item.quality + quality if item.quality < 50
+    item.quality = item.quality + quality if item.quality < MAX_QUALITY
   end
 
   def decrement_quality(item, quality = 1)
-    item.quality = item.quality - quality if item.quality > 0
+    item.quality = item.quality - quality if item.quality > MIN_QUALITY
   end
 
 end
