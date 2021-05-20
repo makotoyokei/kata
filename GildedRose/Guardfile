@@ -25,8 +25,8 @@
 #  * 'just' rspec: 'rspec'
 
 guard :rspec, cmd: "bundle exec rspec", spec_paths: ["./"] do
-  watch(%r{^spec/.+_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$})     { |m| "./#{m[1]}_spec.rb" }
+  watch(%r{_spec\.rb$})
+  watch(%r{(.+)\.rb$})     { |m| "./#{m[1]}_spec.rb" }
   # watch('spec/spec_helper.rb')  { "spec" }
   # dsl = Guard::RSpec::Dsl.new(self)
 

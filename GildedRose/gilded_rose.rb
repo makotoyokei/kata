@@ -4,54 +4,41 @@ class GildedRose
     @items = items
   end
 
+  AGED_BRIE = "Aged Brie"
+  BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
+  SULFURAS = "Sulfuras, Hand of Ragnaros"
+
+
   def update_quality()
     @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
+      case item.name
+      when AGED_BRIE
+        return increment_quality_depend_on_sell_in(item, 2) if item.sell_in <= 0
+        return increment_quality_depend_on_sell_in(item)
+      when BACKSTAGE
+        return item.quality = 0 if item.sell_in <= 0
+        return increment_quality_depend_on_sell_in(item, 3) if item.sell_in <= 5
+        return increment_quality_depend_on_sell_in(item, 2) if item.sell_in <= 10
+        return increment_quality_depend_on_sell_in(item)
+      when SULFURAS
+        return
       else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
+        return decrement_quality(item, 2) if item.sell_in <= 0
+        return decrement_quality(item)
       end
     end
   end
+
+  def increment_quality_depend_on_sell_in(item, quality = 1)
+    item.quality = item.quality + quality if item.quality < 50
+  end
+
+  def decrement_quality(item, quality = 1)
+    item.quality = item.quality - quality if item.quality > 0
+  end
+
 end
+
 
 class Item
   attr_accessor :name, :sell_in, :quality

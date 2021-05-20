@@ -24,7 +24,7 @@ describe GildedRose do
         context "残り日数がない場合" do
           let(:item) { Item.new("Aged Brie", 0, 0) }
           context "残り日数が1日減ると" do
-            it "Qualityが1増えること" do
+            it "Qualityが2増えること" do
               subject
               expect(item.quality).to eq (0 + 2)
             end
@@ -101,7 +101,7 @@ describe GildedRose do
         it "Qualityが変わらないこと" do
           subject
           expect(item.quality).to eq (40 + 0)
-        end        
+        end
       end
     end
     context "Itemがそれ以外の場合" do
@@ -112,8 +112,8 @@ describe GildedRose do
             it "Qualityが1減ること" do
               subject
               expect(item.quality).to eq (40 - 1)
-            end        
-          end  
+            end
+          end
         end
         context "残り日数がない場合" do
           context "残り日数が1日減ると" do
@@ -121,8 +121,8 @@ describe GildedRose do
             it "Qualityが2減ること" do
               subject
               expect(item.quality).to eq (40 - 2)
-            end        
-          end  
+            end
+          end
         end
       end
       context "Qualityが0の場合" do
@@ -131,8 +131,8 @@ describe GildedRose do
           it "Qualityが変わらないこと" do
             subject
             expect(item.quality).to eq (0)
-          end        
-        end  
+          end
+        end
       end
     end
   end
